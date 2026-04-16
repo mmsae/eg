@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>easyGold Homepage | Draft</title>
+  <style>
+    * { box-sizing: border-box; }
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: #ffffff;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    .page {
+      width: 1920px;
+      margin: 0 auto;
+      background: #fff;
+      overflow: hidden;
+    }
+
+    .slice,
+    .slice-link,
+    .hero-slider,
+    .hero-slide,
+    .hero-slide-link,
+    .hero-slide img,
+    .slice img,
+    .slice-link img {
+      display: block;
+      width: 100%;
+      margin: 0;
+      padding: 0;
+      border: 0;
+      line-height: 0;
+    }
+
+    .hero-slider {
+      position: relative;
+      width: 100%;
+      overflow: hidden;
+      background: #fff;
+    }
+
+    .hero-track {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1921 / 754;
+    }
+
+    .hero-slide {
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.8s ease-in-out;
+      pointer-events: none;
+    }
+
+    .hero-slide.active {
+      opacity: 1;
+      pointer-events: auto;
+      z-index: 2;
+    }
+
+    .hero-slide-link {
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .hero-dots {
+      position: absolute;
+      left: 50%;
+      bottom: 18px;
+      transform: translateX(-50%);
+      display: flex;
+      gap: 10px;
+      z-index: 5;
+    }
+
+    .hero-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+      border: 2px solid rgba(255,255,255,0.95);
+      background: rgba(255,255,255,0.3);
+      cursor: pointer;
+      transition: background 0.25s ease, transform 0.25s ease;
+    }
+
+    .hero-dot.active {
+      background: rgba(255,255,255,0.95);
+      transform: scale(1.05);
+    }
+
+    @media (max-width: 1920px) {
+      .page {
+        width: 100%;
+      }
+    }
+  </style>
+</head>
+<body>
+  <script>
+    (function () {
+      const PASSWORD = "eG26";
+      const input = prompt("Enter password to view this page:");
+
+      if (input !== PASSWORD) {
+        document.write("<h2 style='font-family:Arial; text-align:center; margin-top:100px;'>Access Denied</h2>");
+        document.close();
+      }
+    })();
+  </script>
+
+  <div class="page">
+    <div class="slice"><img src="images/01_easyGold_LivePrices.jpg" alt="easyGold live prices" /></div>
+    <div class="slice"><img src="images/02_easyGold_LogoTopNav.png" alt="easyGold top navigation" /></div>
+
+    <div class="hero-slider" aria-label="easyGold hero slider">
+      <div class="hero-track">
+        <div class="hero-slide active">
+          <a class="hero-slide-link" href="#"><img src="images/03_easyGold_Hero1.jpg" alt="easyGold hero slide 1" /></a>
+        </div>
+        <div class="hero-slide">
+          <a class="hero-slide-link" href="#"><img src="images/easyGold_Hero2.jpg" alt="easyGold hero slide 2" /></a>
+        </div>
+        <div class="hero-slide">
+          <a class="hero-slide-link" href="#"><img src="images/easyGold_Hero3.jpg" alt="easyGold hero slide 3" /></a>
+        </div>
+        <div class="hero-slide">
+          <a class="hero-slide-link" href="#"><img src="images/easyGold_Hero4.jpg" alt="easyGold hero slide 4" /></a>
+        </div>
+      </div>
+      <div class="hero-dots" aria-label="Hero slider navigation">
+        <button class="hero-dot active" type="button" aria-label="Show slide 1"></button>
+        <button class="hero-dot" type="button" aria-label="Show slide 2"></button>
+        <button class="hero-dot" type="button" aria-label="Show slide 3"></button>
+        <button class="hero-dot" type="button" aria-label="Show slide 4"></button>
+      </div>
+    </div>
+
+    <div class="slice"><img src="images/04_easyGold_CTA.png" alt="easyGold call to action" /></div>
+    <div class="slice"><img src="images/05_easyGold_Footer.jpg" alt="easyGold footer" /></div>
+  </div>
+
+  <script>
+    (function () {
+      const slides = Array.from(document.querySelectorAll('.hero-slide'));
+      const dots = Array.from(document.querySelectorAll('.hero-dot'));
+      let current = 0;
+      let intervalId;
+      const delay = 3000;
+
+      function showSlide(index) {
+        slides[current].classList.remove('active');
+        dots[current].classList.remove('active');
+        current = index;
+        slides[current].classList.add('active');
+        dots[current].classList.add('active');
+      }
+
+      function nextSlide() {
+        showSlide((current + 1) % slides.length);
+      }
+
+      function startAutoPlay() {
+        stopAutoPlay();
+        intervalId = setInterval(nextSlide, delay);
+      }
+
+      function stopAutoPlay() {
+        if (intervalId) clearInterval(intervalId);
+      }
+
+      dots.forEach((dot, index) => {
+        dot.addEventListener('click', function () {
+          showSlide(index);
+          startAutoPlay();
+        });
+      });
+
+      const slider = document.querySelector('.hero-slider');
+      slider.addEventListener('mouseenter', stopAutoPlay);
+      slider.addEventListener('mouseleave', startAutoPlay);
+
+      startAutoPlay();
+    })();
+  </script>
+</body>
+</html>
